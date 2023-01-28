@@ -1,0 +1,106 @@
+
+<section class="vh-100"> 
+    <div class="container py-5 h-100">
+      <button type="button" (click)="logout()" class="btn">LogOut
+        <fa-icon [icon]="['fas', 'sign-out-alt']" class="me-1"></fa-icon>
+      </button>
+      
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col">
+          <div class="card" id="list1" style="border-radius: .75rem; background-color: #eff1f2;">
+            <div class="card-body py-4 px-4 px-md-5">
+  
+              <p class="h1 text-center mt-3 mb-4 pb-3 title" >
+                <i class="fas fa-check-square me-1"></i>
+                <fa-icon [icon]="['fas', 'check']" class=" me-1"></fa-icon>
+                <u>{{username}}`s Todo-s</u>
+              </p>
+
+              <div class="pb-2">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex flex-row align-items-center">
+                      <input type="text" class="form-control form-control-lg" 
+                      [(ngModel)]="taskText"
+                      placeholder="Add new...">
+                      
+                      <input type="text"
+                      class="date"
+                      data-mdb-toggle="tooltip" 
+                      [(ngModel)]="taskDueDate"
+                      ngbDatepicker #d="ngbDatepicker"
+                      >
+
+                      <a href="javascript:void(0)" (click)="d.open()" title="Set Due Date">
+                        <fa-icon [icon]="['fas', 'calendar']" class="title me-3"></fa-icon>
+                      </a>
+
+                      <div>
+                        <button type="button" class="btn btn-primary" (click)="addTask()">Add</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+  
+              <hr class="my-4">
+  
+              <div class="d-flex justify-content-end align-items-center mb-4 pt-2 pb-3">
+                <p class="small mb-0 me-2 text-muted">Filter</p>
+                <select class="select" (change)="filter($event.target)">
+                  <option value="1">All</option>
+                  <option value="2">Completed</option>
+                  <option value="3">Active</option>
+                </select>
+              </div>
+              
+              <div *ngFor="let task of tasksArray">
+                <ul class="list-group list-group-horizontal rounded-0 bg-transparent" *ngIf="task.showStatus=='show'">
+                  <li
+                    class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
+                    <p class="lead fw-normal mb-0">{{task.id}}</p>
+                  </li>
+                  <li
+                    class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
+                    <p class="lead fw-normal mb-0">{{task.text}}</p>
+                  </li>
+                  <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
+                    <div class="d-flex flex-row justify-content-end mb-1">
+                      <a href="javascript:void(0)" class="text-info" 
+                        (click)="updateTask(task)"
+                        data-mdb-toggle="tooltip" title="Edit todo">  
+                        <fa-icon [icon]="['fas', 'edit']" class="me-3"></fa-icon>
+                      </a>
+                      <a href="javascript:void(0)" class="text-danger" 
+                        data-mdb-toggle="tooltip" title="Delete todo" (click)="deleteTask(task)">
+                        <fa-icon [icon]="['fas', 'trash']"  class=" me-3"></fa-icon>
+                      </a>
+                      <a href="javascript:void(0)" class="text-info" *ngIf="task.status != 'Completed'"
+                        data-mdb-toggle="tooltip" title="Complete todo" (click)="completeTask(task)">
+                        <fa-icon [icon]="['fas', 'check']"></fa-icon>
+                      </a>
+                      
+                    </div>
+                    <div class="text-end text-muted">
+                      <!-- <fa-icon [icon]="['fas', 'info-circle']" class="me-2"></fa-icon> -->
+                      <p class="small mb-0" title="Created date">
+                        Created date: {{task.addedDate}}
+                      </p>
+                      <p class="small mb-0" title="Due date">
+                        Due date: {{task.dueDate}}
+                      </p>
+                    </div>
+                    <div class="text-end text-muted">
+                      <p class="small mb-0" title="Status">
+                        {{task.status}}
+                      </p>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
